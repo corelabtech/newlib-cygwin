@@ -32,7 +32,6 @@
 
 #include <sys/cdefs.h>
 #include <sys/_types.h>
-#include <stdint.h>
 
 #if (__has_extension(c_atomic) || __has_extension(cxx_atomic)) && \
     defined(__clang__)
@@ -87,10 +86,6 @@
 #if defined(__CLANG_ATOMICS)
 #define	ATOMIC_VAR_INIT(value)		(value)
 #define	atomic_init(obj, value)		__c11_atomic_init(obj, value)
-#elif !(defined __STDC_VERSION__ && __STDC_VERSION__ > 201710L)
-#define	ATOMIC_VAR_INIT(value)		(value)
-#define atomic_init(obj, val) \
-  atomic_store_explicit (obj, val, __ATOMIC_RELAXED)
 #else
 #define	ATOMIC_VAR_INIT(value)		{ .__val = (value) }
 #define	atomic_init(obj, value)		((void)((obj)->__val = (value)))

@@ -33,7 +33,7 @@ memcpy(void *__restrict aa, const void *__restrict bb, size_t n)
   const char *b = (const char *)bb;
   char *end = a + n;
   uintptr_t msk = sizeof (long) - 1;
-#ifdef _HAVE_HW_MISALIGNED_ACCESS
+#if __riscv_misaligned_slow || __riscv_misaligned_fast
   if (n < sizeof (long))
 #else
   if (unlikely ((((uintptr_t)a & msk) != ((uintptr_t)b & msk))
